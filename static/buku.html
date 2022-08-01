@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Login Website</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body>
+    <form id= "addTheBook" class="form-signin">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Tambah Buku</h1>
+      </div>
+
+      <div class="form-label-group">
+      <input type="text" autocomplete="off" name="" id="judul" placeholder="Judul" class="form-control" required="" autofocus="">
+      <label for="inputJudul">Judul</label>
+      </div>
+
+      <div class="form-label-group">
+      <input type="text" autocomplete="off" name="" id="isbn" placeholder="ISBN" class="form-control" required="">
+      <label for="inputISBN">ISBN</label>
+      </div>
+
+      <div class="form-label-group">
+      <input type="text" autocomplete="off" name="" id="penerbit" placeholder="Penerbit" class="form-control" required="">
+      <label for="inputPenerbit">Penerbit</label>
+      </div>
+
+      <div class="form-label-group">
+      <input type="text" autocomplete="off" name="" id="deskripsi" placeholder="Deskripsi" class="form-control" required="">
+      <label for="inputDeskripsi">Deskripsi</label>
+      </div>
+
+      <div class="btn-display">
+      <input type="submit" name="" value="Simpan" class="btn btn-primary">
+      <input type="submit" name="" value="Simpan" class="btn btn-primary">
+      </div>
+      <p class="mt-5 mb-3 text-muted text-center">© Fadhlan Fadhlillah weBook</p>
+    </form>
+
+    <script>
+        const form = document.getElementById("addTheBook")
+        form.addEventListener("submit", book)
+
+        // 1. send data as JSON
+        async function book(event) {
+      event.preventDefault()
+      const judul = document.getElementById('judul').value;
+      const isbn = document.getElementById('isbn').value;
+      const penerbit = document.getElementById('penerbit').value;
+      const deskripsi = document.getElementById('deskripsi').value;
+
+      const result = await fetch('/api/books', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          judul,
+          isbn,
+          penerbit,
+          deskripsi
+        })
+      }).then((response) => response.json())
+
+      if (result.status === "ok"){
+        alert("Success");
+      } else {
+        alert(result.error);
+      }
+    }
+    </script>
+
+  </body>
+</html>

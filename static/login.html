@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Login Website</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body>
+      <form id= "login" class="form-signin">
+        <div class="text-center mb-4">
+          <h1 class="h3 mb-3 font-weight-normal">weBook</h1>
+        </div>
+
+        <div class="form-label-group">
+        <input type="text" autocomplete="off" name="" id="username" placeholder="Username" class="form-control" required="" autofocus="">
+        <label for="inputUsername">Username</label>
+        </div>
+
+        <div class="form-label-group">
+        <input type="password" autocomplete="off" name="" id="password" placeholder="Password" class="form-control" required="">
+        <label for="inputPassword">Password</label>
+        </div>
+
+        <input type="submit" name="" value="Login" class="btn btn-lg btn-primary btn-block">
+        <a href="#">Forgot Password?</a>
+        <p class="btnUser">New User?</p>
+        <a href="#" class="btn btn-md btn-warning" type="submit" name="" value="Submit Form" id="">Register</a>
+        <p class="mt-5 mb-3 text-muted text-center">© Fadhlan Fadhlillah weBook</p>
+      </form>
+
+      <script>
+          const form = document.getElementById("login")
+          form.addEventListener("submit", login)
+
+          // 1. send data as JSON
+          async function login(event) {
+				event.preventDefault()
+				const username = document.getElementById('username').value;
+				const password = document.getElementById('password').value;
+
+				const result = await fetch('/api/login', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						username,
+						password
+					})
+				}).then((response) => response.json())
+
+            if (result.status === "ok") {
+              console.log("Got the token : ", result.data);
+              localStorage.setItem("token", result.data);
+              alert("Success");
+            } else {
+              alert(result.error);
+            }
+          }
+      </script>
+
+  </body>
+</html>

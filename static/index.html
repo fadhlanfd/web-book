@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Register Website</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+
+  </head>
+  <body>
+    <form id= "reg-form" class="form-signin">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Registrasi weBook</h1>
+      </div>
+
+      <div class="form-label-group">
+      <input type="text" autocomplete="off" name="" id="username" placeholder="Username" class="form-control" required="" autofocus="">
+      <label for="inputUsername">Username</label>
+      </div>
+
+      <div class="form-label-group">
+      <input type="password" autocomplete="off" name="" id="password" placeholder="Password" class="form-control" required="">
+      <label for="inputPassword">Password</label>
+      </div>
+
+      <div class="form-label-group">
+      <input type="text" autocomplete="off" name="" id="profileName" placeholder="Profile Name" class="form-control" required="">
+      <label for="inputProfileName">Profile Name</label>
+      </div>
+
+      <div class="form-label-group">
+      <input type="text" autocomplete="off" name="" id="address" placeholder="Address" class="form-control" required="">
+      <label for="inputAddress">Address</label>
+      </div>
+
+      <input type="submit" name="" value="Sign Up" class="btn btn-lg btn-primary btn-block">
+      <p class="mt-5 mb-3 text-muted text-center">© Fadhlan Fadhlillah weBook</p>
+    </form>
+
+      <script>
+          const form = document.getElementById("reg-form")
+          form.addEventListener("submit", registerUser)
+
+          // 1. send data as JSON
+          async function registerUser(event) {
+				event.preventDefault()
+				const username = document.getElementById('username').value;
+				const password = document.getElementById('password').value;
+        const profileName = document.getElementById('profileName').value;
+        const address = document.getElementById('address').value;
+
+				const result = await fetch('/api/register', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						username,
+						password,
+            profileName,
+            address
+					})
+				}).then((response) => response.json())
+
+            if (result.status === "ok"){
+              alert("Success");
+            } else {
+              alert(result.error);
+            }
+          }
+      </script>
+
+  </body>
+</html>
